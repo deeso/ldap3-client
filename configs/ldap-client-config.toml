@@ -1,0 +1,8 @@
+[ldap-client]
+    ldap_host = 'ldap.example.com'
+    ldap_port = 636
+    bind_user = "CN=LDAPUSER,OU=Employees,OU=Example Users,DC=example,DC=com"
+    bind_password = null
+    default_search_base = 'dc=Example,dc=com'
+    base_dn = 'OU=Employees,OU=Example Users,DC=example,DC=com'
+    validate_ssl = false
