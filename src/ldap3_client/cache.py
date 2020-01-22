@@ -6,8 +6,25 @@ class CacheEntry(object):
     MINUTES_EXPIRATION_POLICY = 60
 
     def __init__(self, username, fields: dict, mail=None, authenticated=False):
-        self.username = username
+        if isinstance(username, str):
+            self.username = username
+        else:
+            msg = "Error: username should be string not %s: %s"%(type(username), str(username))
+            print(msg)
+            raise Exception(msg)
+        
+        mails = [mail]
+        if isinstance(mail, list):
+            mails = mail
+            mail = "unknown@unknown.com"
+            m = None
+            for k in mail:
+                if k is not None and len(k) > 0 and k.find('@') > -1:
+                    mail = k
+                    break
+                    
         self.mail = mail
+        self.mails = mails
         self.attributes = {k:v for k,v in fields.get(ATTRIBUTES,{}).items()}
         self.fields = fields
         self.authenticated = authenticated
