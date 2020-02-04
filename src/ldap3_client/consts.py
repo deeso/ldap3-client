@@ -117,6 +117,7 @@ MONGO_CONFIGS = [
 RAW_QUERY = 'raw_query'
 SEARCH_BASE = 'search_base'
 ATTRIBUTES = 'attributes'
+MANAGER_ATTRIBUTES = 'manager_attributes'
 SEARCH_FILTER = 'search_filter'
 
 # AUTHENTICATE
