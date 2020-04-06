@@ -323,6 +323,12 @@ def perform_post_authentication(username, ldap_client: LdapClient, connection):
     global THREADS
     results = ldap_client.search_username(username, SUBJECT_ATTRIBUTES, connection=connection)
     attributes = results[0].get(ATTRIBUTES, {})
-    mgr_username = attributes.get(MANAGER, 'CN=,').split('CN=', )[1].split(',')[0]
-    results = ldap_client.search_username(mgr_username, SUBJECT_ATTRIBUTES, connection=connection)
+    mgr = attributes.get(MANAGER, 'CN=,')
+    if isinstance(mgr, str):
+        mgr_username = mgr.split('CN=', )[1].split(',')[0]
+        results = ldap_client.search_username(mgr_username, SUBJECT_ATTRIBUTES, connection=connection)
+    elif isinstance(mgr, list):
+        for _mgr in mgr:
+            mgr_username = _mgr.split('CN=', )[1].split(',')[0]
+            results = ldap_client.search_username(mgr_username, SUBJECT_ATTRIBUTES, connection=connection)
     connection.unbind()
